@@ -1,14 +1,6 @@
 <%@ include file="header.html" %>
 
-	<table align="center" width="100%" cellpadding="5">
-		<tr>
-			<td align="center" bgcolor="#CCFFCC" style="width:25%"><a href="index.jsp" style="text-decoration: none"><font color="#808080" face="Comic Sans MS">ABOUT</a></font></td>
-			<td align="center" bgcolor="#CCFFCC" style="width:25%"><a href="membership.jsp" style="text-decoration: none"><font color="#808080" face="Comic Sans MS">MEMBERSHIP</a></font></td>
-			<td align="center" bgcolor="#CCFFCC" style="width:25%"><a href="classes.jsp" style="text-decoration: none"><font color="#808080" face="Comic Sans MS">CLASSES</a></font></td>
-			<td align="center" bgcolor="#CCFFCC" style="width:25%"><a href="contact.html" style="text-decoration: none"><font color="#808080" face="Comic Sans MS">CONTACT</a></font></td>
-		</tr>
-	</table>
-	<br>
+
 	<table align="center" width="100%" cellpadding="5" cellspacing="0">
 		<tr>
 			<td align="center" bgcolor="#66CCCC" colspan="2"><font color="#990000" size="4">Existing Members</font></td>
