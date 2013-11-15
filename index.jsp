@@ -1,37 +1,17 @@
 <%@ include file="header.html" %>
 
-
-	<table align="center" width="100%" cellpadding="5" cellspacing="0">
+	<table align="center" width="100%" cellpadding="8" cellspacing="0">
 		<tr>
-			<td align="center" bgcolor="#66CCCC" colspan="2"><font color="#990000" size="4">Existing Members</font></td>
-			<td align="center" bgcolor="#669999" colspan="2"><font color="#990000" size="4">First Time Users</font></td>
-		</tr>
-		<tr>
-			<td align="right" bgcolor="#669999" style="width:25%; padding:10px 10px 10px 0px">
-				<p style="margin-bottom: 10px">
-					<font color="#990000" size="3">
-						Member ID<br>
-						Password
-					</font>
-				</p>
-				&nbsp;
+			<td align="center" width=50% bgcolor="#66CCCC" >
+				<a href="activity.jsp"><font color="#990000" size="4">Existing Members</font></a>
 			</td>
-			<td align="left" bgcolor="#669999" style="width:25%; padding:10px 0px 10px 10px">
-				<p style="margin-bottom: 10px">
-					<input type="text" style="background-color:#FFFFFF" name="memberID" size="20" value=""><br>
-					<input type="password" style="background-color:#FFFFFF" name="password" size="20" value=""><br>
-				</p>
-				<input type="button" name="login" value="Login">
-			</td>
-			<td align="center" bgcolor="#66CCCC" style="width:50%; padding:15px">
-				<font color="#009999" size="4">
-				<p>To create a new account ...</p>
-				<p><a href="newMember.jsp"><font color="#009999" size="4">Click Here</font></a></p>
-				</font>
+			<td align="center" width=50% bgcolor="#669999">
+				<a href="newMember.jsp"><font color="#990000" size="4">First Time Users</font></a>
 			</td>
 		</tr>
 	</table>
-	<br><br>
+
+	<br>
 	<table align="center" width="100%">
 		<colgroup>
 			<col style="width: 50%" />
