@@ -29,7 +29,7 @@
 			<td align="center"><%= strAge %></td>
 			<td align="center"><%= strOpening %></td>
 			<td align="center"><%= strFee %></td>
-			<td align="center"><input type="button" value="Add to Cart"></td>
+			<td align="center"><input type="button" name=<%= Integer.toString(i) %> value="Add to Cart"></td>
 		</tr>
 <%
 	}
