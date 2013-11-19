@@ -34,6 +34,11 @@
 <%
 	}
 %>
+		<tr><td>&nbsp;</td></tr>
+		<tr>
+			<td colspan="5">&nbsp;</td>
+			<td align="center"><a href="cart.jsp"><img src="images/cart.bmp" name="cart" width="90" height="30"></a></td>
+		</tr>
 	</table>
 </form>
 
