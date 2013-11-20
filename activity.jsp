@@ -5,7 +5,7 @@
 
 <% Activity activity = new Activity("/activities.txt"); %>
 
-<form action="RegisterServlet" method="post">
+<form action="ActivityServlet" method="post">
 	<table align="center" width="80%">
 		<tr>
 			<th bgcolor="#FFCC88">Activity</th>
@@ -29,7 +29,7 @@
 			<td align="center"><%= strAge %></td>
 			<td align="center"><%= strOpening %></td>
 			<td align="center"><%= strFee %></td>
-			<td align="center"><input type="button" name=<%= Integer.toString(i) %> value="Add to Cart"></td>
+			<td align="center"><input type="button" name=<%= Integer.toString(i) %> value="Add to Cart" onclick="form.action='ActivityServlet?action=addToCart'; form.submit();"></td>
 		</tr>
 <%
 	}

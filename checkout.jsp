@@ -66,9 +66,14 @@
 	}
 	
 	function isNormalInteger(str) {
-		// ~~: Truncate the number (chops off any fractional portion).
-		var n = ~~Number(str);
-		return String(n) === str && n > 0;
+		if (str.length > 16)
+			return false;
+			
+		var number = Number(str);
+		if (isNaN(number))
+			return false;
+		
+		return String(Math.floor(number)) === str && number > 0;
 	}
 	
 	function isValidExpDate(str) {
