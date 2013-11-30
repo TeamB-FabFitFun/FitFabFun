@@ -3,10 +3,10 @@
 	<table align="center" width="100%" cellpadding="8" cellspacing="0">
 		<tr>
 			<td align="center" width=50% bgcolor="#66CCCC" >
-				<a href="activity.jsp"><font color="#990000" size="4">Existing Members</font></a>
+				<a href="/fabfitfun/jsp/activity.jsp"><font color="#990000" size="4">Existing Members</font></a>
 			</td>
 			<td align="center" width=50% bgcolor="#669999">
-				<a href="newMember.jsp"><font color="#990000" size="4">First Time Users</font></a>
+				<a href="/fabfitfun/jsp/newMember.jsp"><font color="#990000" size="4">First Time Users</font></a>
 			</td>
 		</tr>
 	</table>
