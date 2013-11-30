@@ -13,6 +13,7 @@ public class Member implements Serializable
 	private String gender;
 	private int age;
 	private ArrayList<String> activities;
+	private ArrayList<String> cart;
 	
 	public Member() {
 		firstName = "";
@@ -22,9 +23,10 @@ public class Member implements Serializable
 		gender = "N";
 		age = 0;
 		activities = new ArrayList<String>();
+		cart = new ArrayList<String>();
 	}
 	
-	public Member(String fName, String lName, String memEmail, String memPwd, String memGender, int memAge, String[] memActivities ) {
+	public Member(String fName, String lName, String memEmail, String memPwd, String memGender, int memAge, String[] memActivities, String[] memCart) {
 		firstName = fName;
 		lastName = lName;
 		email = memEmail;
@@ -32,6 +34,7 @@ public class Member implements Serializable
 		gender = memGender;
 		age = memAge;
 		activities = new ArrayList<String> (Arrays.asList(memActivities));
+		cart = new ArrayList<String> (Arrays.asList(memCart));
 	}
 	
 	public void setFirstName(String fName) {
@@ -130,5 +133,38 @@ public class Member implements Serializable
 		else {
 			return "";
 		}
+	}
+	
+	public void addToCart(String inActivity) {
+		cart.add(inActivity);
+	}
+	
+	public void removeFromCart(String activity) {
+		int cartSize = cart.size();
+		String [] cartActivities = cart.toArray(new String[cartSize]);
+		for (int i=0; i<cartSize; i++) {
+			if (cartActivities[i].equals(activity)) {
+				cart.remove(i);
+				break;
+			}
+		}
+	}
+	
+	public void clearCart() {
+		cart.clear();
+	}
+	
+	public void checkoutCart() {
+		int cartSize = cart.size();
+		String [] cartActivities = cart.toArray(new String[cartSize]);
+		for (int i=0; i<cartSize; i++) {
+			addActivity(cartActivities[i]);
+		}
+		
+		clearCart();
+	}
+	
+	public String[] getCart() {
+		return cart.toArray(new String[cart.size()]);
 	}
 }

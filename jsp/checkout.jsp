@@ -1,7 +1,6 @@
 <%@ include file="header.html" %>
 
-<form action="" method="get">
-	<table style="margin:0px auto; width:90%" cellspacing="10">
+<table style="margin:0px auto; width:90%" cellspacing="10">
 	<tr>
 		<td colspan="3" style="padding-top:20px;">
 			<fieldset style="padding:10px">
@@ -34,13 +33,13 @@
 	</tr>
     <tr align="center">
         <td colspan="3" style="padding-top:15px">
-            <a href="activity.jsp" style="text-decoration:none"><input type="button" style=" width:10%" name="cancel" value="Cancel"></a>
+            <a href="activity.jsp" style="text-decoration:none"><input type="button" style="width:10%" value="Cancel"></a>
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	        <input type="button" style=" width:10%" name="confirm" value="Confirm" onclick="confirm(this.form);">
+	        <input type="button" style="width:10%" value="Confirm" onclick="confirm(this.form);">
 		</td>
     </tr>
-	</table>
-</form>
+</table>
+
 
 <script type="text/javascript">
 	function confirm(form) {
@@ -59,7 +58,7 @@
 		} else if (!isValidExpDate(ccExpText)){
 			alert("Credit Card Expiration Date is NOT valid!");
 		} else {
-			form.action='ResultsServlet?action=confirm';
+			form.action='/fabfitfun/FFFServlet?action=confirm';
 			// submit
 			form.submit();
 		}

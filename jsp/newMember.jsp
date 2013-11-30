@@ -1,6 +1,5 @@
 <%@ include file="header.html" %>
 	<hr>
-	<form action="RegisterServlet" method="post">
 		<table align="center" width="80%" cellpadding="5" cellspacing="0">
 			<tr>
 				<td align="right"><font color="#990000">First Name</font></td>
@@ -36,9 +35,8 @@
 				<td><input type="text" style="background-color:#FFFFFF" name="age" size="20" value=""></td>
 			</tr>
 			<tr>
-			    <td colspan="2" align="center"><input type="submit" name="register" value="Register"></td>
+			    <td colspan="2" align="center"><input type="button" name="register" value="Register" onclick="form.action='/fabfitfun/FFFServlet?action=register'; form.submit();"></td>
 			</tr>
 		</table>
-	</form>
 
 <%@ include file="footer.html" %>
