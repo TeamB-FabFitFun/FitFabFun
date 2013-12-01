@@ -10,7 +10,11 @@
         <servlet-name>FFFServlet</servlet-name>
         <url-pattern>/FFFServlet</url-pattern>
     </servlet-mapping>
-	
+
+    <welcome-file-list>
+        <welcome-file>jsp/index.jsp</welcome-file>
+    </welcome-file-list>
+    	
 	<security-constraint>	
 		<web-resource-collection>
 			<web-resource-name>*</web-resource-name>
@@ -50,8 +54,8 @@
         <session-timeout>30</session-timeout>
     </session-config>
 
-    <welcome-file-list>
-        <welcome-file>/jsp/activity.jsp</welcome-file>
-    </welcome-file-list>
--->
+        <welcome-file-list>
+            <welcome-file>/jsp/activity.jsp</welcome-file>
+        </welcome-file-list>
+    -->
 </web-app>

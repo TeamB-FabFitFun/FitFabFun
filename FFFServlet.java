@@ -1,4 +1,5 @@
 
+import business.ActivityDataStore;
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -18,16 +19,23 @@ public class FFFServlet extends HttpServlet {
         if (mem == null) {
             // create the Member object
             mem = new Member();
+            session.setAttribute("member", mem);
         }
 
         String url = "";
         String action = request.getParameter("action");
         if ("about".equalsIgnoreCase(action)) {
             url = "/jsp/index.jsp";
+
         } else if ("member".equalsIgnoreCase(action)) {
             url = "/jsp/newMember.jsp";
+
         } else if ("class".equalsIgnoreCase(action)) {
+            // store the registration object in the session
+            ActivityDataStore activityDS = new ActivityDataStore();
+            session.setAttribute("activityDS", activityDS);
             url = "/jsp/activity.jsp";
+
         } else if ("contact".equalsIgnoreCase(action)) {
             url = "/jsp/contactus.jsp";
 
@@ -48,6 +56,7 @@ public class FFFServlet extends HttpServlet {
             mem.setAge(Integer.parseInt(age)); // Needs "" check
 
             url = "/jsp/regConfirm.jsp";
+
         } else if ("contact_submit".equalsIgnoreCase(action)) {
             // get parameters from the request
             String fName = request.getParameter("firstName");
@@ -79,17 +88,23 @@ public class FFFServlet extends HttpServlet {
             session.setAttribute("feedbackFirstName", fName);
 
             url = "/jsp/confirmContact.jsp";
-            
-        } else if ("add".equalsIgnoreCase(action.substring(0, 3))) {
-            mem.addToCart(action.substring(9));
+
+        } else if ("addToCart".equalsIgnoreCase(action)) {
+            String actId = request.getParameter("addedActivity");
+            mem.addToCart(actId);
             url = "/jsp/activity.jsp";
-            
-        } else if ("remove".equalsIgnoreCase(action.substring(0, 6))) {
-            mem.removeFromCart(action.substring(14));
+
+        } else if ("removeFromCart".equalsIgnoreCase(action)) {
+            String actId = request.getParameter("removedActivity");
+            mem.removeFromCart(actId);
             url = "/jsp/cart.jsp";
 
         } else if ("goToCart".equalsIgnoreCase(action)) {
             url = "/jsp/cart.jsp";
+
+        } else if ("checkout".equalsIgnoreCase(action)) {
+            url = "/jsp/checkout.jsp";
+
         } else {
             // No action was matched.  Return to start page.
             url = "/jsp/index.jsp";

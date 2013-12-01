@@ -20,22 +20,22 @@ public class Member implements Serializable {
         lastName = "";
         email = "";
         password = "";
-        gender = "N";
+        gender = "";
         age = 0;
         activities = new ArrayList<String>();
         cart = new ArrayList<String>();
     }
 
-    public Member(String fName, String lName, String memEmail, String memPwd, String memGender, int memAge, String[] memActivities, String[] memCart) {
-        firstName = fName;
-        lastName = lName;
-        email = memEmail;
-        password = memPwd;
-        gender = memGender;
-        age = memAge;
-        activities = new ArrayList<String>(Arrays.asList(memActivities));
-        cart = new ArrayList<String>(Arrays.asList(memCart));
-    }
+//    public Member(String fName, String lName, String memEmail, String memPwd, String memGender, int memAge, String[] memActivities, String[] memCart) {
+//        firstName = fName;
+//        lastName = lName;
+//        email = memEmail;
+//        password = memPwd;
+//        gender = memGender;
+//        age = memAge;
+//        activities = new ArrayList<String>(Arrays.asList(memActivities));
+//        cart = new ArrayList<String>(Arrays.asList(memCart));
+//    }
 
     public void setFirstName(String fName) {
         if (fName == null) {
@@ -125,24 +125,10 @@ public class Member implements Serializable {
         activities.clear();
     }
 
-    //TBD - Recommend this return an ArrayList
-    public String[] getActivities() {
-        return activities.toArray(new String[activities.size()]);
+    public ArrayList<String> getActivities() {
+        return activities;
     }
-    //TBD
-//	public ArrayList<String> getActivities() {
-//            return activities;
-//        }
-
-    //TBD - Is this actually needed?
-    public String getActivity(int index) {
-        String actStr = "";
-        if (index < activities.size()) {
-            actStr = activities.get(index);
-        }
-        return actStr;
-    }
-
+    
     public void addToCart(String inActivity) {
         cart.add(inActivity);
     }
@@ -162,12 +148,7 @@ public class Member implements Serializable {
         }
     }
 
-    //TBD - Recommend this return an ArrayList
-    public String[] getCart() {
-        return cart.toArray(new String[cart.size()]);
+    public ArrayList<String> getCart() {
+        return cart;
     }
-    //TBD
-//        public ArrayList<String> getCart() {
-//            return cart;
-//        }
 }
