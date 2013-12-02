@@ -3,7 +3,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="business.Activity"%>
 
-<h2>&nbsp;&nbsp;&nbsp;&nbsp;Shopping Cart</h2>
+<h2><font color="#990000">&nbsp;&nbsp;&nbsp;&nbsp;Shopping Cart</font></h2>
 <hr>
 
 <jsp:useBean id="member" scope="session" class="business.Member"/>
@@ -13,7 +13,7 @@
 
 <% if (cart.isEmpty()) {%>
 <div align="center">
-    <b>Your shopping cart is empty.</b>
+    <b><font color="#990000">Your shopping cart is empty.</font></b>
     <br><br>
     <input type="button" value="View Activities" 
            onclick="form.action = '/fabfitfun/FFFServlet?action=class';
