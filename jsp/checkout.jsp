@@ -1,6 +1,6 @@
 <%@ include file="header.html" %>
 
-<table style="margin:0px auto; width:90%" cellspacing="10">
+<table style="margin:0px auto; width:50%" cellspacing="10">
 	<tr>
 		<td colspan="3" style="padding-top:20px;">
 			<fieldset style="padding:10px">
@@ -58,7 +58,7 @@
 		} else if (!isValidExpDate(ccExpText)){
 			alert("Credit Card Expiration Date is NOT valid!");
 		} else {
-			form.action='/fabfitfun/FFFServlet?action=confirm';
+			form.action='/fabfitfun/FFFServlet?action=confirmPayment';
 			// submit
 			form.submit();
 		}

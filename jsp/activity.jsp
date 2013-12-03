@@ -41,10 +41,9 @@
     <%
         }
     %>
-    <tr><td>&nbsp;</td></tr>
     <tr>
         <td colspan="5">&nbsp;</td>
-        <td align="center">
+        <td align="center" style="padding-top:20px;">
             <input type="image" src="images/cart.bmp" name="cart" alt="Cart" width="90" height="30" 
                    onclick="form.action = '/fabfitfun/FFFServlet?action=goToCart';
                            form.submit();">

@@ -4,8 +4,10 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.mail.MessagingException;
+import java.util.ArrayList;
 
 import business.Member;
+import business.Activity;
 import util.MailUtil;
 
 public class FFFServlet extends HttpServlet {
@@ -15,11 +17,11 @@ public class FFFServlet extends HttpServlet {
             HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Member mem = (Member) session.getAttribute("member");
-        if (mem == null) {
+        Member mbr = (Member) session.getAttribute("member");
+        if (mbr == null) {
             // create the Member object
-            mem = new Member();
-            session.setAttribute("member", mem);
+            mbr = new Member();
+            session.setAttribute("member", mbr);
         }
 
         String url = "";
@@ -48,12 +50,12 @@ public class FFFServlet extends HttpServlet {
             String gender = request.getParameter("gender");
             String age = request.getParameter("age");
 
-            mem.setFirstName(fName);
-            mem.setLastName(lName);
-            mem.setEmail(email);
-            mem.setPassword(password);
-            mem.setGender(gender);
-            mem.setAge(Integer.parseInt(age)); // Needs "" check
+            mbr.setFirstName(fName);
+            mbr.setLastName(lName);
+            mbr.setEmail(email);
+            mbr.setPassword(password);
+            mbr.setGender(gender);
+            mbr.setAge(Integer.parseInt(age));
 
             url = "/jsp/regConfirm.jsp";
 
@@ -91,12 +93,12 @@ public class FFFServlet extends HttpServlet {
 
         } else if ("addToCart".equalsIgnoreCase(action)) {
             String actId = request.getParameter("addedActivity");
-            mem.addToCart(actId);
+            mbr.addToCart(actId);
             url = "/jsp/activity.jsp";
 
         } else if ("removeFromCart".equalsIgnoreCase(action)) {
             String actId = request.getParameter("removedActivity");
-            mem.removeFromCart(actId);
+            mbr.removeFromCart(actId);
             url = "/jsp/cart.jsp";
 
         } else if ("goToCart".equalsIgnoreCase(action)) {
@@ -104,6 +106,37 @@ public class FFFServlet extends HttpServlet {
 
         } else if ("checkout".equalsIgnoreCase(action)) {
             url = "/jsp/checkout.jsp";
+
+        } else if ("confirmPayment".equalsIgnoreCase(action)) {
+            // get member parameters
+            String email = mbr.getEmail();
+            String subject = "Fab Fit Fun Confirmation";
+            String fName = mbr.getFirstName();
+            ArrayList<String> cart = mbr.getCart();
+            int totalCost = 0;
+            ActivityDataStore activityDS = (ActivityDataStore)session.getAttribute("activityDS");
+			
+            // create email body
+            String body = "Dear " + fName + ",\n";
+            body += "You have registerd the following course:\n";
+            for (String actId : cart) {
+                Activity activity = activityDS.getActivity(actId);
+                totalCost += activity.getFeeInt();
+				
+				body += activity.getName() + "\t" + activity.getDate() + "\t" + activity.getCategory() + "\t" + activity.getFee() + "\n";
+            }
+			body += "\nThe total cost of $" + totalCost + " has been charged to your credit card.\n\n";
+			body += "Thank you!\n\nFab Fit Fun Team";
+            boolean isBodyHTML = false;
+			
+            // send a confirmation email to the member
+            try {
+                MailUtil.sendMail(email, "noreply", subject, body, isBodyHTML);
+            } catch (MessagingException e) {
+                System.out.println("Error sending out an email.");
+            }
+		
+            url = "/jsp/confirmPayment.jsp";
 
         } else {
             // No action was matched.  Return to start page.
