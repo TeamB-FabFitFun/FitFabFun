@@ -1,4 +1,4 @@
-<%@ include file="header.html" %>
+<%@ include file="header_noform.html" %>
 
 <form action="j_security_check" method="get">
 	<table style="margin:0px auto; width:20%" cellspacing="10">
@@ -14,4 +14,4 @@
 	</table>
 </form>
 
-<%@ include file="footer.html" %>
+<%@ include file="footer_noform.html" %>

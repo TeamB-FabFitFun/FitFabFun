@@ -33,9 +33,6 @@ public class FFFServlet extends HttpServlet {
             url = "/jsp/newMember.jsp";
 
         } else if ("class".equalsIgnoreCase(action)) {
-            // store the registration object in the session
-            ActivityDataStore activityDS = new ActivityDataStore();
-            session.setAttribute("activityDS", activityDS);
             url = "/jsp/activity.jsp";
 
         } else if ("contact".equalsIgnoreCase(action)) {
@@ -118,7 +115,7 @@ public class FFFServlet extends HttpServlet {
 			
             // create email body
             String body = "Dear " + fName + ",\n";
-            body += "You have registerd the following course:\n";
+            body += "You have registerd the following course(s):\n";
             for (String actId : cart) {
                 Activity activity = activityDS.getActivity(actId);
                 totalCost += activity.getFeeInt();

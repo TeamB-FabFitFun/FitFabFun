@@ -3,8 +3,12 @@
 <%@ page import="business.Activity" %>
 <%@ page import="business.ActivityDataStore" %>
 
-<jsp:useBean id="activityDS" scope="session" class="business.ActivityDataStore"/>
-
+<%
+    // store the registration object in the session
+    ActivityDataStore activityDS = new ActivityDataStore();
+    session.setAttribute("activityDS", activityDS);
+%>
+		
 <input type="hidden" id="addedActivity" name="addedActivity" value="">
 <table align="center" width="80%" rules="rows">
     <tr>
@@ -44,7 +48,7 @@
     <tr>
         <td colspan="5">&nbsp;</td>
         <td align="center" style="padding-top:20px;">
-            <input type="image" src="images/cart.bmp" name="cart" alt="Cart" width="90" height="30" 
+            <input type="image" src="http://localhost:8080/fabfitfun/images/cart.bmp" name="cart" alt="My Cart" width="90" height="30" 
                    onclick="form.action = '/fabfitfun/FFFServlet?action=goToCart';
                            form.submit();">
         </td>
