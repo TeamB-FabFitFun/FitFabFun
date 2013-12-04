@@ -64,12 +64,12 @@ public class FFFServlet extends HttpServlet {
             String fName = request.getParameter("firstName");
             String lName = request.getParameter("lastName");
             String email = request.getParameter("email");
+            if (email == null || email == "") email = "NA";
             String phone = request.getParameter("phone");
             String feedback = request.getParameter("feedback");
 
             // send a feedback email to the customer service	
-            //		String to = "fatfitfun_support@gmail.com";
-            String to = "tongbai.meng@gmail.com";
+            String to = "jhu.fabfitfun@gmail.com";
             String from = email;
             String subject = "Fab Fit Fun Customer Feedback";
 
