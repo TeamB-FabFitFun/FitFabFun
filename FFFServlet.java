@@ -18,11 +18,11 @@ public class FFFServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Member mbr = (Member) session.getAttribute("member");
-        if (mbr == null) {
-            // create the Member object
-            mbr = new Member();
-            session.setAttribute("member", mbr);
-        }
+//        if (mbr == null) {
+//            // create the Member object
+//            mbr = new Member();
+//            session.setAttribute("member", mbr);
+//        }
 
         String url = "";
         String action = request.getParameter("action");
@@ -37,6 +37,25 @@ public class FFFServlet extends HttpServlet {
 
         } else if ("contact".equalsIgnoreCase(action)) {
             url = "/jsp/contactus.jsp";
+
+        } else if ("login".equalsIgnoreCase(action)) {
+            // Temporary - Member should be added when login or new registration is completed
+            Member member = (Member) session.getAttribute("member");
+
+            if (member == null || member.isEmpty()) {
+                // create the Member object
+                member = new Member();
+                member.setFirstName("Temporary Member");
+                session.setAttribute("member", member);
+            }
+
+            url = "/jsp/login.jsp";
+
+        } else if ("logout".equalsIgnoreCase(action)) {
+            // Terminate the session
+            session.invalidate();
+
+            url = "/jsp/index.jsp";
 
         } else if ("register".equalsIgnoreCase(action)) {
             // get parameters from the request
@@ -61,7 +80,9 @@ public class FFFServlet extends HttpServlet {
             String fName = request.getParameter("firstName");
             String lName = request.getParameter("lastName");
             String email = request.getParameter("email");
-            if (email == null || email == "") email = "NA";
+            if (email == null || email == "") {
+                email = "NA";
+            }
             String phone = request.getParameter("phone");
             String feedback = request.getParameter("feedback");
 
@@ -111,37 +132,37 @@ public class FFFServlet extends HttpServlet {
             String fName = mbr.getFirstName();
             ArrayList<String> cart = mbr.getCart();
             int totalCost = 0;
-            ActivityDataStore activityDS = (ActivityDataStore)session.getAttribute("activityDS");
-			
+            ActivityDataStore activityDS = (ActivityDataStore) session.getAttribute("activityDS");
+
             // create email body
             String body = "Dear " + fName + ",\n";
             body += "You have registerd the following course(s):\n";
             for (String actId : cart) {
                 Activity activity = activityDS.getActivity(actId);
                 totalCost += activity.getFeeInt();
-				
-				body += activity.getName() + "\t" + activity.getDate() + "\t" + activity.getCategory() + "\t" + activity.getFee() + "\n";
+
+                body += activity.getName() + "\t" + activity.getDate() + "\t" + activity.getCategory() + "\t" + activity.getFee() + "\n";
             }
-			body += "\nThe total cost of $" + totalCost + " has been charged to your credit card.\n\n";
-			body += "Thank you!\n\nFab Fit Fun Team";
+            body += "\nThe total cost of $" + totalCost + " has been charged to your credit card.\n\n";
+            body += "Thank you!\n\nFab Fit Fun Team";
             boolean isBodyHTML = false;
-			
+
             // send a confirmation email to the member
             try {
                 MailUtil.sendMail(email, "noreply", subject, body, isBodyHTML);
             } catch (MessagingException e) {
                 System.out.println("Error sending out an email.");
             }
-		
+
             url = "/jsp/confirmPayment.jsp";
 
         } else {
             // No action was matched.  Return to start page.
             url = "/jsp/index.jsp";
         }
-
         // forward request and response objects to JSP page
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
+
         dispatcher.forward(request, response);
     }
 

@@ -3,12 +3,14 @@
 <%@ page import="business.Activity" %>
 <%@ page import="business.ActivityDataStore" %>
 
+<jsp:useBean id="member" scope="session" class="business.Member"/>
+
 <%
     // store the registration object in the session
     ActivityDataStore activityDS = new ActivityDataStore();
     session.setAttribute("activityDS", activityDS);
 %>
-		
+
 <input type="hidden" id="addedActivity" name="addedActivity" value="">
 <table align="center" width="80%" rules="rows">
     <tr>
@@ -35,24 +37,26 @@
         <td align="center"><%= strCategory%></td>
         <td align="center"><%= strOpenings%></td>
         <td align="center"><%= strFee%></td>
+
+        <%
+            // Only display add buttons for members that are logged in
+            if (!member.isEmpty()) {
+        %>
         <td align="center">
             <input type="button" value="Add to Cart" 
                    onclick="form.action = '/fabfitfun/FFFServlet?action=addToCart';
                            document.getElementById('addedActivity').value = <%= strActId%>;
                            form.submit();">
         </td>
+        <% }%>
+
     </tr>
     <%
         }
     %>
-    <tr>
-        <td colspan="5">&nbsp;</td>
-        <td align="center" style="padding-top:20px;">
-            <input type="image" src="http://localhost:8080/fabfitfun/images/cart.bmp" name="cart" alt="My Cart" width="90" height="30" 
-                   onclick="form.action = '/fabfitfun/FFFServlet?action=goToCart';
-                           form.submit();">
-        </td>
-    </tr>
+
 </table>
+
+<%@ include file="shortcuts.jsp" %>
 
 <%@ include file="footer.html" %>

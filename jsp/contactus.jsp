@@ -36,4 +36,6 @@
 	}
 </script>
 
+<%@ include file="shortcuts.jsp" %>
+
 <%@ include file="footer.html" %>

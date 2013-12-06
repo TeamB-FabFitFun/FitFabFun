@@ -37,6 +37,11 @@ public class Member implements Serializable {
 //        cart = new ArrayList<String>(Arrays.asList(memCart));
 //    }
 
+    // This assumes all valid members have first names registered
+    public boolean isEmpty() {
+        return "".equals(firstName);
+    }
+    
     public void setFirstName(String fName) {
         if (fName == null) {
             firstName = "";
