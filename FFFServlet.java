@@ -7,6 +7,7 @@ import javax.mail.MessagingException;
 import java.util.ArrayList;
 
 import business.Member;
+import business.MemberDataStore;
 import business.Activity;
 import util.MailUtil;
 
@@ -17,12 +18,14 @@ public class FFFServlet extends HttpServlet {
             HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+
+        MemberDataStore memberDS = (MemberDataStore) session.getAttribute("memberDS");
+        if (memberDS == null) {
+            memberDS = new MemberDataStore();
+            session.setAttribute("memberDS", memberDS);
+        }
+
         Member mbr = (Member) session.getAttribute("member");
-//        if (mbr == null) {
-//            // create the Member object
-//            mbr = new Member();
-//            session.setAttribute("member", mbr);
-//        }
 
         String url = "";
         String action = request.getParameter("action");
@@ -39,17 +42,15 @@ public class FFFServlet extends HttpServlet {
             url = "/jsp/contactus.jsp";
 
         } else if ("login".equalsIgnoreCase(action)) {
-            // Temporary - Member should be added when login or new registration is completed
-            Member member = (Member) session.getAttribute("member");
+            // use email as the unique ID for member
+            String email = request.getParameter("username");
+            Member member = memberDS.getMember(email);
 
-            if (member == null || member.isEmpty()) {
-                // create the Member object
-                member = new Member();
-                member.setFirstName("Temporary Member");
-                session.setAttribute("member", member);
+            if (member == null) {
+                url = "/jsp/newMember.jsp";
+            } else {
+                url = "/jsp/activity.jsp";
             }
-
-            url = "/jsp/login.jsp";
 
         } else if ("logout".equalsIgnoreCase(action)) {
             // Terminate the session
@@ -66,6 +67,7 @@ public class FFFServlet extends HttpServlet {
             String gender = request.getParameter("gender");
             String age = request.getParameter("age");
 
+            mbr = new Member();
             mbr.setFirstName(fName);
             mbr.setLastName(lName);
             mbr.setEmail(email);
@@ -73,6 +75,9 @@ public class FFFServlet extends HttpServlet {
             mbr.setGender(gender);
             mbr.setAge(Integer.parseInt(age));
 
+            // store the registration object in the session
+            session.setAttribute("member", mbr);
+            memberDS.addMember(mbr);
             url = "/jsp/regConfirm.jsp";
 
         } else if ("contact_submit".equalsIgnoreCase(action)) {

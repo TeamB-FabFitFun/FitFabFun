@@ -40,7 +40,7 @@
 
         <%
             // Only display add buttons for members that are logged in
-            if (!member.isEmpty()) {
+            if (member != null) {
         %>
         <td align="center">
             <input type="button" value="Add to Cart" 

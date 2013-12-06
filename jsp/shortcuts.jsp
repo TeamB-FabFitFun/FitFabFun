@@ -10,7 +10,7 @@
         <%
             Member myMember = (Member) session.getAttribute("member");
 
-            if (myMember == null || myMember.isEmpty()) {
+            if (myMember == null) {
                 // Not logged in
 %>
         <tr>
