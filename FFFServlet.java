@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import business.Member;
 import business.MemberDataStore;
 import business.Activity;
+import business.ActivityDataStore;
 import util.MailUtil;
 
 public class FFFServlet extends HttpServlet {
@@ -19,6 +20,12 @@ public class FFFServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
 
+        ActivityDataStore activityDS = (ActivityDataStore)session.getAttribute("activityDS");
+        if (activityDS == null) {
+            activityDS = new ActivityDataStore();
+            session.setAttribute("activityDS", activityDS);
+        }
+		
         MemberDataStore memberDS = (MemberDataStore) session.getAttribute("memberDS");
         if (memberDS == null) {
             memberDS = new MemberDataStore();
@@ -41,22 +48,34 @@ public class FFFServlet extends HttpServlet {
         } else if ("contact".equalsIgnoreCase(action)) {
             url = "/jsp/contactus.jsp";
 
-        } else if ("login".equalsIgnoreCase(action)) {
+        } else if ("logon".equalsIgnoreCase(action)) {
             // use email as the unique ID for member
             String email = request.getParameter("username");
+            String password = request.getParameter("password");
+			
             Member member = memberDS.getMember(email);
 
             if (member == null) {
                 url = "/jsp/newMember.jsp";
             } else {
-                url = "/jsp/activity.jsp";
+                if (member.getPassword().equals(password)) {
+                    url = "/jsp/activity.jsp";
+                } else {
+                    url = "/jsp/login.jsp";
+                }
             }
+
+        } else if ("login".equalsIgnoreCase(action)) {
+            url = "/jsp/login.jsp";
 
         } else if ("logout".equalsIgnoreCase(action)) {
             // Terminate the session
             session.invalidate();
 
             url = "/jsp/index.jsp";
+
+        } else if ("cancel".equalsIgnoreCase(action)) {
+            url = "/jsp/activity.jsp";
 
         } else if ("register".equalsIgnoreCase(action)) {
             // get parameters from the request
@@ -137,7 +156,6 @@ public class FFFServlet extends HttpServlet {
             String fName = mbr.getFirstName();
             ArrayList<String> cart = mbr.getCart();
             int totalCost = 0;
-            ActivityDataStore activityDS = (ActivityDataStore) session.getAttribute("activityDS");
 
             // create email body
             String body = "Dear " + fName + ",\n";

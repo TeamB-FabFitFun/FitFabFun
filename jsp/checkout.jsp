@@ -33,7 +33,7 @@
 	</tr>
     <tr align="center">
         <td colspan="3" style="padding-top:15px">
-            <a href="activity.jsp" style="text-decoration:none"><input type="button" style="width:10%" value="Cancel"></a>
+	        <input type="button" style="width:10%" value="Cancel" onclick="form.action = '/fabfitfun/FFFServlet?action=cancel'; form.submit();">
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	        <input type="button" style="width:10%" value="Confirm" onclick="confirm(this.form);">
 		</td>

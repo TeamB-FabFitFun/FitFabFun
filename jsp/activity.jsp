@@ -4,12 +4,7 @@
 <%@ page import="business.ActivityDataStore" %>
 
 <jsp:useBean id="member" scope="session" class="business.Member"/>
-
-<%
-    // store the registration object in the session
-    ActivityDataStore activityDS = new ActivityDataStore();
-    session.setAttribute("activityDS", activityDS);
-%>
+<jsp:useBean id="activityDS" scope="session" class="business.ActivityDataStore"/>
 
 <input type="hidden" id="addedActivity" name="addedActivity" value="">
 <table align="center" width="80%" rules="rows">

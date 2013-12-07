@@ -9,7 +9,7 @@
 			Password</br>
 			<input type="password" size="20" name="password" value="">
 		<td></tr>
-		<tr><td><input type="button" name="login" value="Login" onclick="form.action = '/fabfitfun/FFFServlet?action=login'; form.submit();"></td></tr>
+		<tr><td><input type="button" name="login" value="Login" onclick="form.action = '/fabfitfun/FFFServlet?action=logon'; form.submit();"></td></tr>
 	</table>
 
 <%@ include file="footer.html" %>
