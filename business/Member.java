@@ -26,22 +26,11 @@ public class Member implements Serializable {
         cart = new ArrayList<String>();
     }
 
-//    public Member(String fName, String lName, String memEmail, String memPwd, String memGender, int memAge, String[] memActivities, String[] memCart) {
-//        firstName = fName;
-//        lastName = lName;
-//        email = memEmail;
-//        password = memPwd;
-//        gender = memGender;
-//        age = memAge;
-//        activities = new ArrayList<String>(Arrays.asList(memActivities));
-//        cart = new ArrayList<String>(Arrays.asList(memCart));
-//    }
-
     // This assumes all valid members have first names registered
     public boolean isEmpty() {
         return "".equals(firstName);
     }
-    
+
     public void setFirstName(String fName) {
         if (fName == null) {
             firstName = "";
@@ -133,7 +122,7 @@ public class Member implements Serializable {
     public ArrayList<String> getActivities() {
         return activities;
     }
-    
+
     public void addToCart(String inActivity) {
         cart.add(inActivity);
     }
@@ -155,5 +144,25 @@ public class Member implements Serializable {
 
     public ArrayList<String> getCart() {
         return cart;
+    }
+
+    public boolean inCart(String actId) {
+        boolean found = false;
+        for (String actStr : cart) {
+            if (actStr.equals(actId)) {
+                found = true;
+            }
+        }
+        return found;
+    }
+
+    public boolean inActivities(String actId) {
+        boolean found = false;
+        for (String actStr : activities) {
+            if (actStr.equals(actId)) {
+                found = true;
+            }
+        }
+        return found;
     }
 }

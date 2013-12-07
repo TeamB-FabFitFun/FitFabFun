@@ -12,7 +12,7 @@ public class MemberDataStore implements java.io.Serializable {
 
     private ArrayList<Member> memberDS;
 
-    private final String fileName = "C:\\members.txt";
+    private final String fileName = "/fabfitfun/members.txt";
     
     public MemberDataStore() {
 

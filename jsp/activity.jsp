@@ -33,14 +33,21 @@
         <td align="center"><%= strFee%></td>
 
         <%
+            Member member = (Member) session.getAttribute("member");
             // Only display add buttons for members that are logged in
-            if (session.getAttribute("member") != null) {
+            if (member != null) {
         %>
         <td align="center">
+            <% if (member.inActivities(strActId)) {%>
+            Registered
+            <% } else if (member.inCart(strActId)) {%>
+            In Cart
+            <% } else {%>
             <input type="button" value="Add to Cart" 
                    onclick="form.action = '/fabfitfun/FFFServlet?action=addToCart';
                            document.getElementById('addedActivity').value = <%= strActId%>;
                            form.submit();">
+            <% }%>
         </td>
         <% }%>
 
