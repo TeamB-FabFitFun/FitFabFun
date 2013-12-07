@@ -138,8 +138,8 @@ public class Member implements Serializable {
     public void checkoutCart() {
         for (String actStr : cart) {
             addActivity(actStr);
-            removeFromCart(actStr);
         }
+        cart.clear();
     }
 
     public ArrayList<String> getCart() {

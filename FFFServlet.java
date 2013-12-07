@@ -183,6 +183,7 @@ public class FFFServlet extends HttpServlet {
                 System.out.println("Error sending out an email.");
             }
 
+            mbr.checkoutCart();
             url = "/jsp/confirmPayment.jsp";
 
         } else {
