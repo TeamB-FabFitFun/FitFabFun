@@ -15,7 +15,6 @@ public class MemberDataStore implements java.io.Serializable {
     private final String fileName = "/fabfitfun/members.txt";
     
     public MemberDataStore() {
-
         memberDS = new ArrayList<Member>();
         
         BufferedReader br = null;
@@ -87,6 +86,8 @@ public class MemberDataStore implements java.io.Serializable {
 			BufferedWriter bw = new BufferedWriter(fw);
 			bw.write(mbr.getFirstName()+","+mbr.getLastName()+","+mbr.getEmail()+","+mbr.getPassword()+","+mbr.getGender()+","+mbr.getAge()+"\r\n");
 			bw.close();
+			
+			memberDS.add(mbr);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -97,7 +98,7 @@ public class MemberDataStore implements java.io.Serializable {
             if (member.getEmail().equalsIgnoreCase(mbrEmail)) {
                 return member;
             }
-        }   
+        }
         return null;
     }
     
