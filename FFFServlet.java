@@ -20,6 +20,9 @@ public class FFFServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
 
+        request.setAttribute ("findUserId", "true");
+        request.setAttribute ("matchPassword", "true");
+
         ActivityDataStore activityDS = (ActivityDataStore)session.getAttribute("activityDS");
         if (activityDS == null) {
             activityDS = new ActivityDataStore();
@@ -56,13 +59,16 @@ public class FFFServlet extends HttpServlet {
             Member member = memberDS.getMember(email);
 
             if (member == null) {
-                url = "/jsp/newMember.jsp";
+                url = "/jsp/login.jsp";
+                request.setAttribute ("findUserId", "false");
             } else {
+                request.setAttribute ("userId", email);
                 if (member.getPassword().equals(password)) {
                     session.setAttribute("member", member);
                     url = "/jsp/activity.jsp";
                 } else {
                     url = "/jsp/login.jsp";
+                    request.setAttribute ("matchPassword", "false");
                 }
             }
 
