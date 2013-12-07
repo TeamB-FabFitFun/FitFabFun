@@ -59,6 +59,7 @@ public class FFFServlet extends HttpServlet {
                 url = "/jsp/newMember.jsp";
             } else {
                 if (member.getPassword().equals(password)) {
+                    session.setAttribute("member", member);
                     url = "/jsp/activity.jsp";
                 } else {
                     url = "/jsp/login.jsp";
@@ -70,8 +71,7 @@ public class FFFServlet extends HttpServlet {
 
         } else if ("logout".equalsIgnoreCase(action)) {
             // Terminate the session
-            session.invalidate();
-
+            session.removeAttribute("member");
             url = "/jsp/index.jsp";
 
         } else if ("cancel".equalsIgnoreCase(action)) {
@@ -86,17 +86,17 @@ public class FFFServlet extends HttpServlet {
             String gender = request.getParameter("gender");
             String age = request.getParameter("age");
 
-            mbr = new Member();
-            mbr.setFirstName(fName);
-            mbr.setLastName(lName);
-            mbr.setEmail(email);
-            mbr.setPassword(password);
-            mbr.setGender(gender);
-            mbr.setAge(Integer.parseInt(age));
+            Member newMbr = new Member();
+            newMbr.setFirstName(fName);
+            newMbr.setLastName(lName);
+            newMbr.setEmail(email);
+            newMbr.setPassword(password);
+            newMbr.setGender(gender);
+            newMbr.setAge(Integer.parseInt(age));
 
             // store the registration object in the session
-            session.setAttribute("member", mbr);
-            memberDS.addMember(mbr);
+            session.setAttribute("member", newMbr);
+            memberDS.addMember(newMbr);
             url = "/jsp/regConfirm.jsp";
 
         } else if ("contact_submit".equalsIgnoreCase(action)) {

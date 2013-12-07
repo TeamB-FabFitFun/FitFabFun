@@ -3,7 +3,6 @@
 <%@ page import="business.Activity" %>
 <%@ page import="business.ActivityDataStore" %>
 
-<jsp:useBean id="member" scope="session" class="business.Member"/>
 <jsp:useBean id="activityDS" scope="session" class="business.ActivityDataStore"/>
 
 <input type="hidden" id="addedActivity" name="addedActivity" value="">
@@ -35,7 +34,7 @@
 
         <%
             // Only display add buttons for members that are logged in
-            if (member != null) {
+            if (session.getAttribute("member") != null) {
         %>
         <td align="center">
             <input type="button" value="Add to Cart" 
