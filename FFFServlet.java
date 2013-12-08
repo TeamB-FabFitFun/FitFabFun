@@ -7,12 +7,14 @@ import javax.mail.MessagingException;
 import java.util.ArrayList;
 
 import business.Member;
-import business.MemberDataStore;
 import business.Activity;
 import business.ActivityDataStore;
+import business.MemberDataBase;
 import util.MailUtil;
 
 public class FFFServlet extends HttpServlet {
+
+    private static MemberDataBase memberDB;
 
     @Override
     protected void doPost(HttpServletRequest request,
@@ -20,22 +22,30 @@ public class FFFServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
 
-        request.setAttribute ("findUserId", "true");
-        request.setAttribute ("matchPassword", "true");
+        request.setAttribute("findUserId", "true");
+        request.setAttribute("matchPassword", "true");
 
-        ActivityDataStore activityDS = (ActivityDataStore)session.getAttribute("activityDS");
+        ActivityDataStore activityDS = (ActivityDataStore) session.getAttribute("activityDS");
         if (activityDS == null) {
             activityDS = new ActivityDataStore();
             session.setAttribute("activityDS", activityDS);
         }
-		
-        MemberDataStore memberDS = (MemberDataStore) session.getAttribute("memberDS");
-        if (memberDS == null) {
-            memberDS = new MemberDataStore();
-            session.setAttribute("memberDS", memberDS);
-        }
+
+//        MemberDataStore memberDS = (MemberDataStore) session.getAttribute("memberDS");
+//        if (memberDS == null) {
+//            memberDS = new MemberDataStore();
+//            session.setAttribute("memberDS", memberDS);
+//        }
 
         Member mbr = (Member) session.getAttribute("member");
+
+        if (!MemberDataBase.isInitialized()) {
+            memberDB = new MemberDataBase();
+        }
+
+        // Prints members table - Debug only ////
+        memberDB.printMembersTbl();
+        /////////////////////////////////////////
 
         String url = "";
         String action = request.getParameter("action");
@@ -55,20 +65,20 @@ public class FFFServlet extends HttpServlet {
             // use email as the unique ID for member
             String email = request.getParameter("username");
             String password = request.getParameter("password");
-			
-            Member member = memberDS.getMember(email);
+
+            Member member = memberDB.getMember(email);
 
             if (member == null) {
                 url = "/jsp/login.jsp";
-                request.setAttribute ("findUserId", "false");
+                request.setAttribute("findUserId", "false");
             } else {
-                request.setAttribute ("userId", email);
+                request.setAttribute("userId", email);
                 if (member.getPassword().equals(password)) {
                     session.setAttribute("member", member);
                     url = "/jsp/activity.jsp";
                 } else {
                     url = "/jsp/login.jsp";
-                    request.setAttribute ("matchPassword", "false");
+                    request.setAttribute("matchPassword", "false");
                 }
             }
 
@@ -102,7 +112,7 @@ public class FFFServlet extends HttpServlet {
 
             // store the registration object in the session
             session.setAttribute("member", newMbr);
-            memberDS.addMember(newMbr);
+            memberDB.addMember(newMbr);
             url = "/jsp/regConfirm.jsp";
 
         } else if ("contact_submit".equalsIgnoreCase(action)) {
@@ -142,11 +152,13 @@ public class FFFServlet extends HttpServlet {
         } else if ("addToCart".equalsIgnoreCase(action)) {
             String actId = request.getParameter("addedActivity");
             mbr.addToCart(actId);
+            memberDB.updateMember(mbr);
             url = "/jsp/activity.jsp";
 
         } else if ("removeFromCart".equalsIgnoreCase(action)) {
             String actId = request.getParameter("removedActivity");
             mbr.removeFromCart(actId);
+            memberDB.updateMember(mbr);
             url = "/jsp/cart.jsp";
 
         } else if ("goToCart".equalsIgnoreCase(action)) {
@@ -184,6 +196,7 @@ public class FFFServlet extends HttpServlet {
             }
 
             mbr.checkoutCart();
+            memberDB.updateMember(mbr);
             url = "/jsp/confirmPayment.jsp";
 
         } else {

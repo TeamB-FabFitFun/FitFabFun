@@ -26,9 +26,20 @@ public class Member implements Serializable {
         cart = new ArrayList<String>();
     }
 
-    // This assumes all valid members have first names registered
+    public Member(String fName, String lName, String memEmail, String memPwd, String memGender, int memAge, String[] memActivities, String[] memCart) {
+        firstName = fName;
+        lastName = lName;
+        email = memEmail;
+        password = memPwd;
+        gender = memGender;
+        age = memAge;
+        activities = new ArrayList<String>(Arrays.asList(memActivities));
+        cart = new ArrayList<String>(Arrays.asList(memCart));
+    }
+    
+    // This assumes all valid members have email registered
     public boolean isEmpty() {
-        return "".equals(firstName);
+        return "".equals(email);
     }
 
     public void setFirstName(String fName) {
