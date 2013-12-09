@@ -7,7 +7,7 @@
 <hr>
 
 <jsp:useBean id="member" scope="session" class="business.Member"/>
-<jsp:useBean id="activityDS" scope="session" class="business.ActivityDataStore"/>
+<jsp:useBean id="activityDB" scope="session" class="business.ActivityDataBase"/>
 
 <% ArrayList<String> cart = member.getCart();%>
 
@@ -29,7 +29,7 @@
         int totalCost = 0;
 
         for (String actId : cart) {
-            Activity activity = activityDS.getActivity(actId);
+            Activity activity = activityDB.getActivity(actId);
             totalCost += activity.getFeeInt();
     %>
     <tr>

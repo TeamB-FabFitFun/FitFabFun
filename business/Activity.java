@@ -1,10 +1,5 @@
 package business;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-
 public class Activity implements java.io.Serializable {
 
     private String actId;

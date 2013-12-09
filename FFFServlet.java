@@ -1,5 +1,4 @@
 
-import business.ActivityDataStore;
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -8,13 +7,14 @@ import java.util.ArrayList;
 
 import business.Member;
 import business.Activity;
-import business.ActivityDataStore;
+import business.ActivityDataBase;
 import business.MemberDataBase;
 import util.MailUtil;
 
 public class FFFServlet extends HttpServlet {
 
     private static MemberDataBase memberDB;
+    private static ActivityDataBase activityDB;
 
     @Override
     protected void doPost(HttpServletRequest request,
@@ -25,27 +25,22 @@ public class FFFServlet extends HttpServlet {
         request.setAttribute("findUserId", "true");
         request.setAttribute("matchPassword", "true");
 
-        ActivityDataStore activityDS = (ActivityDataStore) session.getAttribute("activityDS");
-        if (activityDS == null) {
-            activityDS = new ActivityDataStore();
-            session.setAttribute("activityDS", activityDS);
-        }
-
-//        MemberDataStore memberDS = (MemberDataStore) session.getAttribute("memberDS");
-//        if (memberDS == null) {
-//            memberDS = new MemberDataStore();
-//            session.setAttribute("memberDS", memberDS);
-//        }
-
         Member mbr = (Member) session.getAttribute("member");
 
         if (!MemberDataBase.isInitialized()) {
             memberDB = new MemberDataBase();
         }
 
-        // Prints members table - Debug only ////
-        memberDB.printMembersTbl();
-        /////////////////////////////////////////
+        // Prints members table - Debug only //
+        //memberDB.printMembersTbl();
+
+        if (!ActivityDataBase.isInitialized()) {
+            activityDB = new ActivityDataBase();
+        }
+        session.setAttribute("activityDB", activityDB);
+
+        // Prints Activity table - Debug only //
+        //activityDB.printActivityTbl();
 
         String url = "";
         String action = request.getParameter("action");
@@ -179,7 +174,7 @@ public class FFFServlet extends HttpServlet {
             String body = "Dear " + fName + ",\n";
             body += "You have registerd the following course(s):\n";
             for (String actId : cart) {
-                Activity activity = activityDS.getActivity(actId);
+                Activity activity = activityDB.getActivity(actId);
                 totalCost += activity.getFeeInt();
 
                 body += activity.getName() + "\t" + activity.getDate() + "\t" + activity.getCategory() + "\t" + activity.getFee() + "\n";
@@ -193,6 +188,11 @@ public class FFFServlet extends HttpServlet {
                 MailUtil.sendMail(email, "noreply", subject, body, isBodyHTML);
             } catch (MessagingException e) {
                 System.out.println("Error sending out an email.");
+            }
+
+            // Change the number of openings available for each added activity
+            for (String cartItem : mbr.getCart()) {
+                activityDB.decrementOpenings(cartItem);
             }
 
             mbr.checkoutCart();
