@@ -19,7 +19,7 @@
 
 	<table style="margin:0px auto; width:20%" cellspacing="10">
 		<tr><td>
-			<font color=<%= fontColorUser %>>User ID</font></br>
+			<font color=<%= fontColorUser %>>User ID (email address)</font></br>
 			<input type="text" size="20" name="username" value=<%= userId %>>
 		</td></tr>
 		<tr><td>

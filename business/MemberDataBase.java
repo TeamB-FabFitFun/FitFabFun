@@ -143,7 +143,7 @@ public class MemberDataBase {
 
     // Returns false when no matching member email was found
     // This method does not update email address. 
-    public boolean updateMember(Member mbr) {
+    public boolean updateMember(Member mbr, String oldEmail) {
         boolean success = false;
         try {
             String connectionURL = "jdbc:derby:" + dbName;
@@ -152,7 +152,7 @@ public class MemberDataBase {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(
                     "select * from membersTbl where email = '"
-                    + mbr.getEmail().toLowerCase() + "'");
+                    + oldEmail.toLowerCase() + "'");
 
             if (rs.next()) {
                 success = true;
@@ -164,7 +164,8 @@ public class MemberDataBase {
                         + "GENDER = ?, "
                         + "AGE = ?, "
                         + "ACTIVITIES = ?, "
-                        + "CART = ? "
+                        + "CART = ?, "
+                        + "EMAIL = ? "
                         + "WHERE EMAIL = ?");
 
                 try {
@@ -188,6 +189,7 @@ public class MemberDataBase {
                     psUpdate.setString(7, cartStrCsv);
 
                     psUpdate.setString(8, mbr.getEmail().toLowerCase());
+                    psUpdate.setString(9, oldEmail.toLowerCase());
                     psUpdate.executeUpdate();
                 } catch (SQLException sqle) {
                     sqle.printStackTrace();
@@ -200,8 +202,12 @@ public class MemberDataBase {
         }
 
         return success;
-    }
-
+    } 
+    
+        public boolean updateMember(Member mbr) {
+            return updateMember(mbr, mbr.getEmail());
+        }
+    
     // Displays the table.  For debugging purposes only
     public void printMembersTbl() {
         try {

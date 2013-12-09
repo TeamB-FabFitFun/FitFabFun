@@ -1,10 +1,10 @@
-1,Baseball,1/1/2014 - 4/30/2014,Group Sporting Activities,20,75
+1,Baseball,1/1/2014 - 4/30/2014,Group Sporting Activities,30,75
 2,Basketball,1/1/2014 - 4/30/2014,Group Sporting Activities,20,95
 3,Soccer,1/1/2014 - 4/30/2014,Group Sporting Activities,20,75
-4,Yoga,1/1/2014 - 4/30/2014,Group Classes,20,105
-5,Pilates,1/1/2014 - 4/30/2014,Group Classes,20,105
+4,Yoga,1/1/2014 - 4/30/2014,Group Classes,12,105
+5,Pilates,1/1/2014 - 4/30/2014,Group Classes,12,105
 6,Swimming - Kids 3-5,1/1/2014 - 4/30/2014,Kid Friendly Activities,20,90
-7,Swimming - Kids 6-8,1/1/2014 - 4/30/2014,Kid Friendly Activities,20,90
+7,Swimming - Kids 6-8,1/1/2014 - 4/30/2014,Kid Friendly Activities,0,90
 8,Swimming - Kids 9-11,1/1/2014 - 4/30/2014,Kid Friendly Activities,20,90
-9,Personal Trainer,1/1/2014 - 4/30/2014,Private Classes,10,1000
+9,Personal Trainer,1/1/2014 - 4/30/2014,Private Classes,2,1000
 10,Hiking,1/5/2014 - 3/30/2014,Outdoor Activities,15,50

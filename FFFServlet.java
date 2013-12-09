@@ -48,7 +48,18 @@ public class FFFServlet extends HttpServlet {
             url = "/jsp/index.jsp";
 
         } else if ("member".equalsIgnoreCase(action)) {
-            url = "/jsp/newMember.jsp";
+            if (mbr == null) {
+                url = "/jsp/login.jsp";
+            } else {
+                url = "/jsp/memberProfile.jsp";
+            }
+
+        } else if ("newMember".equalsIgnoreCase(action)) {
+            if (mbr == null) {
+                url = "/jsp/newMember.jsp";
+            } else {
+                url = "/jsp/memberProfile.jsp";
+            }
 
         } else if ("class".equalsIgnoreCase(action)) {
             url = "/jsp/activity.jsp";
@@ -148,12 +159,14 @@ public class FFFServlet extends HttpServlet {
             String actId = request.getParameter("addedActivity");
             mbr.addToCart(actId);
             memberDB.updateMember(mbr);
+            session.setAttribute("member", mbr);
             url = "/jsp/activity.jsp";
 
         } else if ("removeFromCart".equalsIgnoreCase(action)) {
             String actId = request.getParameter("removedActivity");
             mbr.removeFromCart(actId);
             memberDB.updateMember(mbr);
+            session.setAttribute("member", mbr);
             url = "/jsp/cart.jsp";
 
         } else if ("goToCart".equalsIgnoreCase(action)) {
@@ -197,7 +210,33 @@ public class FFFServlet extends HttpServlet {
 
             mbr.checkoutCart();
             memberDB.updateMember(mbr);
+            session.setAttribute("member", mbr);
             url = "/jsp/confirmPayment.jsp";
+
+        } else if ("updateProfile".equalsIgnoreCase(action)) {
+            // get parameters from the request
+            String oldEmail = request.getParameter("oldEmail");
+            String fName = request.getParameter("firstName");
+            String lName = request.getParameter("lastName");
+            String email = request.getParameter("email");
+            String password = request.getParameter("password1");
+            String gender = request.getParameter("gender");
+            String age = request.getParameter("age");
+
+            Member newMbr = new Member();
+            newMbr.setFirstName(fName);
+            newMbr.setLastName(lName);
+            newMbr.setEmail(email);
+            newMbr.setPassword(password);
+            newMbr.setGender(gender);
+            newMbr.setAge(Integer.parseInt(age));
+            newMbr.setActivities(mbr.getActivities());
+            newMbr.setCart(mbr.getCart());
+
+            // store the registration object in the session
+            session.setAttribute("member", newMbr);
+            memberDB.updateMember(newMbr, oldEmail);
+            url = "/jsp/updateConfirm.jsp";
 
         } else {
             // No action was matched.  Return to start page.

@@ -36,7 +36,7 @@ public class Member implements Serializable {
         activities = new ArrayList<String>(Arrays.asList(memActivities));
         cart = new ArrayList<String>(Arrays.asList(memCart));
     }
-    
+
     // This assumes all valid members have email registered
     public boolean isEmpty() {
         return "".equals(email);
@@ -118,6 +118,10 @@ public class Member implements Serializable {
         }
     }
 
+    public void setActivities(ArrayList<String> actList) {
+        activities = actList;
+    }
+
     public void addActivity(String inActivity) {
         activities.add(inActivity);
     }
@@ -132,6 +136,10 @@ public class Member implements Serializable {
 
     public ArrayList<String> getActivities() {
         return activities;
+    }
+
+    public void setCart(ArrayList<String> cartList) {
+        cart = cartList;
     }
 
     public void addToCart(String inActivity) {
